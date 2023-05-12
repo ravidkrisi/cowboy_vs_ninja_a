@@ -33,9 +33,9 @@ namespace ariel
         return true;
     }
     // this function return the distance between two characters
-    double Character::distance(Character &other)
+    double Character::distance(Character* other)
     {
-        return this->coordinate_.getDistance(other.getLocation());
+        return this->coordinate_.getDistance(other->getLocation());
     }
 
     // this function prints characters: name, hp level, coordinate, type of character. if character is dead, doesnt print hp level and character's name in ().

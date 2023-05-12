@@ -23,7 +23,7 @@ namespace ariel
 
         // **** functions declarations ****
         virtual bool isAlive(); // this function return true if hit_count_ greater than 0, else false
-        virtual double distance(Character& other); // this function return the distance bewtween two characters
+        virtual double distance(Character* other); // this function return the distance bewtween two characters
         virtual void hit(int hitCount); // this function subtract the number of hits from character hp level
         virtual void print(); // this function prints characters: name, hp level, coordinate, type of character. if character is dead, doesnt print hp level and character's name in ().
     };
