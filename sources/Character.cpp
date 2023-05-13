@@ -14,7 +14,8 @@ namespace ariel
     string Character::getName() const {return this->name_;};
     // this function return the character location
     const Point& Character::getLocation() const {return  this->coordinate_;}
-
+    // this function return the hp level of a character
+    int Character::getHpLevel() const {return this->hp_level_;}
     // **** define functions ****
 
     // this function subtract the the number of hits from character hp level

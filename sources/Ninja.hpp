@@ -22,6 +22,7 @@ namespace ariel
         void move(Character* opponent); // the ninja moves toward the opponent accordingly to their speed
         void slash(Character* opponent); // if ninja is alive and the opponent is less than 1 meter far then the ninja slash the opponent and opponent's hp level down by 50 point, else the opponent wont harm
         string print() const override; // this function overrides the print function from character and add info about the type of the Ninja
+        int getSpeed() const; // this function return the ninja speed
     };
 }
 

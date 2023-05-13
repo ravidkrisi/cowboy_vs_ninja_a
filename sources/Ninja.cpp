@@ -1,4 +1,5 @@
 #include "Ninja.hpp"
+#include <stdexcept>
 namespace ariel
 {
     // **** define constructors ****
@@ -7,6 +8,8 @@ namespace ariel
 
 
     // **** define functions ****
+    // this function return the ninja speed
+    int Ninja::getSpeed() const {return this->speed_;}
     // the ninja moves toward the opponent accordingly to their speed
     void Ninja::move(Character* opponent)
     {
@@ -15,6 +18,11 @@ namespace ariel
     // if ninja is alive and the opponent is less than 1 meter far then the ninja slash the opponent and opponent's hp level down by 50 point, else the opponent wont harm
     void Ninja::slash(Character* opponent)
     {
+        // check if the ninja is not same as opponent else throws exception
+        if (this == opponent)
+        {
+            throw std::invalid_argument("ninja cant slash itself, not suicidal");
+        }
         // check if ninja is alive
         if(this->isAlive())
         {

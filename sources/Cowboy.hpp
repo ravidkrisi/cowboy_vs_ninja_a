@@ -24,6 +24,7 @@ namespace ariel
         bool hasBullets() const; // return true if cowboy's cartridge is not empty, else false
         void reload(); // reload the cartridge with extra 6 bullets
         string print() const override; // overrides the print function from character
+        int getCartridge() const; // this function return the number of bullets cowboy has
     };
 }
 

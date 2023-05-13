@@ -34,6 +34,11 @@ namespace ariel
     // this function get 2 points and distance and return the closet point to the destination point from the source point
     Point Point::moveTowards(const Point &src, const Point &dst, double dist_src)
     {
+        // if distance from source longer than the distance between 2 points return the value of dst points
+        if(src.getDistance(dst) < dist_src)
+        {
+            return Point(dst.getX(), dst.getY());
+        }
         double dist = src.getDistance(dst); // calc the distance between src and dst
 
         // Calculate the direction vector between the two points
