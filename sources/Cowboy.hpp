@@ -1,3 +1,6 @@
+#ifndef COWBOY_HPP
+#define COWBOY_HPP
+
 #include <string>
 #include "Character.hpp"
 
@@ -22,4 +25,6 @@ namespace ariel
         void reload(); // reload the cartridge with extra 6 bullets
     };
 }
+
+#endif
 

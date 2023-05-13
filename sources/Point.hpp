@@ -1,3 +1,6 @@
+#ifndef POINT_HPP
+#define POINT_HPP
+
 #include <string>
 
 using namespace std;
@@ -27,3 +30,5 @@ namespace ariel
 
     };
 }
+
+#endif

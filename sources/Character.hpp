@@ -1,3 +1,6 @@
+#ifndef CHARACTER_HPP
+#define CHARACTER_HPP
+
 #include "Point.hpp"
 #include <string>
 using namespace std;
@@ -28,3 +31,5 @@ namespace ariel
         virtual void print(); // this function prints characters: name, hp level, coordinate, type of character. if character is dead, doesnt print hp level and character's name in ().
     };
 }
+
+#endif

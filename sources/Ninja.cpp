@@ -19,10 +19,10 @@ namespace ariel
         if(this->isAlive())
         {
             // check if the opponent is less than 1 meter far
-            if(this->distance(*opponent)<1)
+            if(this->distance(opponent)<1)
             {
                 // hit the opponent with 40 points
-                opponent.hit(40);
+                opponent->hit(40);
             }
         }
         //else nothing happen

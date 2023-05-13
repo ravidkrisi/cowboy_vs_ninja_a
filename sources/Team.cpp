@@ -30,9 +30,12 @@ namespace ariel
     {
         int alive_count;
         //iterate over all team members
-        for (int i=0; i < this->team_members_.size(); i++)
+        for (auto ptr : this->team_members_)
         {
-           if(this->team_members_[i]->isAlive()) alive_count++;
+            if ( ptr->isAlive())
+            {
+                alive_count ++;
+            }
         }
         return alive_count;
     }
@@ -41,15 +44,19 @@ namespace ariel
     void Team::print()
     {
         // iterate over all team members
-        for(int i=0; i < this->team_members_.size(); i++)
+        for (auto ptr : this->team_members_)
         {
-            this->team_members_[i]->print();
+            ptr->print();
         }
     }
 
     void Team::attack(Team *opponent_team)
     {
         setLeader(); // if the team leader is dead set the closest team member to the leader as the new leader
+        Character* victim = getVictim(opponent_team); // get the victim of the opponent team
+
+
+
 
     }
     // if the team leader is dead set the closest team member to the leader as the new leader
@@ -82,7 +89,7 @@ namespace ariel
     }
 
     // return the closest team member of the opponent team to the leader of the attack team
-    Character* Team::setVictim(Team *opponent_team)
+    Character* Team::getVictim(Team *opponent_team)
     {
         Character* closest_victim = NULL;
         double closest_dist = DBL_MAX;
@@ -103,6 +110,59 @@ namespace ariel
         }
         // return the closest victim
         return closest_victim;
+    }
+
+    void Team::attackVictim(Character *victim)
+    {
+        // case 1: iterate over the attacking team cowboy members
+        for(int i=0; i < this->team_members_.size(); i++)
+        {
+            // check if the team member is alive
+            if (this->team_members_[i]->isAlive())
+            {
+                // case 1: cowboy, try to cast to cowboy
+                Cowboy* cowboy = dynamic_cast<Cowboy *>(this->team_members_[i]);
+                // if casting succeed shoot the victim if cowboy has cartridge else reload armor
+                if (cowboy)
+                {
+                    // check if cowboy has bullets
+                    if (cowboy->hasBullets())
+                    {
+                        cowboy->shoot();
+                    }
+                    // else reload armor
+                    else
+                    {
+                        cowboy->reload();
+                    }
+                }
+            }
+        }
+        // case 2: iterate over the attacking team ninja members
+        for (int i=0; i < this->team_members_.size(); i++)
+        {
+            // check if the team member is alive
+            if (this->team_members_[i]->isAlive())
+            {
+                // try to cast to ninja
+                Ninja* ninja = dynamic_cast<Ninja *>(this->team_members_[i]);
+                // if casting succeed slash the victim if he is less than 1 meter far else move towards him
+                if (ninja)
+                {
+                    // check if ninja is less than 1 meter far then slash the victim
+                    if(ninja->distance(victim) < 1)
+                    {
+                        ninja->slash();
+                    }
+                    // else move towards the victim
+                    else
+                    {
+                        ninja->move(victim);
+                    }
+                }
+
+            }
+        }
     }
 
 }
