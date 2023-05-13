@@ -1,12 +1,14 @@
-#ifndef TEAM_HPP
-#define TEAM_HPP
+// #ifndef TEAM_HPP
+// #define TEAM_HPP
 
-//#include "Character.hpp"
+#pragma once 
+
 #include "Ninja.hpp"
 #include "Cowboy.hpp"
-//#include "TrainedNinja.hpp"
-//#include "OldNinja.hpp"
-//#include "YoungNinja.hpp"
+#include "TrainedNinja.hpp"
+#include "OldNinja.hpp"
+#include "YoungNinja.hpp"
+
 #include <vector>
 using namespace std;
 namespace ariel
@@ -34,4 +36,4 @@ namespace ariel
     };
 }
 
-#endif
+// #endif

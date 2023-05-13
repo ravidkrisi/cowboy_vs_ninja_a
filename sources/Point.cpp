@@ -26,9 +26,9 @@ namespace ariel
     }
 
     // this function return the value of the point in string in this format (X,Y)
-    void Point::printPoint()
+    string Point::print () const
     {
-        std::cout << "(" + to_string(this->getX()) + "," + to_string(this->getY()) + ")" << endl;
+        return "(" + to_string(this->getX()) + "," + to_string(this->getY()) + ")";
     }
 
     // this function get 2 points and distance and return the closet point to the destination point from the source point
@@ -45,13 +45,4 @@ namespace ariel
 
         return Point (closet_x, closet_y);
     }
-}
-using namespace ariel;
-int main ()
-{
-    Point a(1, 3);
-    Point b(1, 8);
-
-    Point::moveTowards(a, b, 0).printPoint();
-
 }

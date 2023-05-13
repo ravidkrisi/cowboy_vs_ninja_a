@@ -11,7 +11,7 @@ namespace ariel
     // **** define getters ****
 
     // this function return the character name
-    string Character::getName() {return this->name_;};
+    string Character::getName() const {return this->name_;};
     // this function return the character location
     const Point& Character::getLocation() const {return  this->coordinate_;}
 
@@ -24,7 +24,7 @@ namespace ariel
     }
 
     // this function return true if hit_count_ greater than 0, else false
-    bool Character::isAlive()
+    bool Character::isAlive() const
     {
         if (this->hp_level_<=0)
         {
@@ -33,26 +33,26 @@ namespace ariel
         return true;
     }
     // this function return the distance between two characters
-    double Character::distance(Character* other)
+    double Character::distance(Character* other) const
     {
         return this->coordinate_.getDistance(other->getLocation());
     }
 
     // this function prints characters: name, hp level, coordinate, type of character. if character is dead, doesnt print hp level and character's name in ().
-    void Character::print()
+    string Character::print() const
     {
+        string info = "";
         // if the characters is dead
         if(!this->isAlive())
         {
-            cout << "(" + this->getName() + ")" << endl;
+            info += "(" + this->getName() + ")";
         }
         // if the character is alive
         else
         {
-            cout << this->getName() + " hp level:" + to_string(this->hp_level_) + " Point:";
-            this->coordinate_.printPoint();
-            cout << endl;
+            info += "name: " + this->getName() + " hp level: " + to_string(this->hp_level_) + " coordinate: " + this->coordinate_.print();
         }
+        return info; 
     }
 
 

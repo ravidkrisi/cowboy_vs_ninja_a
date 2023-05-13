@@ -1,6 +1,6 @@
-#ifndef POINT_HPP
-#define POINT_HPP
-
+// #ifndef POINT_HPP
+// #define POINT_HPP
+#pragma once 
 #include <string>
 
 using namespace std;
@@ -25,10 +25,10 @@ namespace ariel
 
         // **** declare functions ****
         double getDistance(const Point& other) const; // this function get another point and calculate the distance between them
-        void printPoint(); // this function return the value of the point in string in this format (X,Y)
+        string print() const; // this function return the value of the point in string in this format (X,Y)
         static Point moveTowards(const Point& src, const Point& dst, double dist); // this function get 2 points and distance and return the closet point to the destination point from the source point
 
     };
 }
 
-#endif
+// #endif

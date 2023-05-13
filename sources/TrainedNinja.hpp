@@ -1,10 +1,10 @@
-#include <string>
+#pragma once 
 #include "Ninja.hpp"
 using namespace std;
 
 namespace ariel
 {
-    class TrainedNinja: protected Ninja
+    class TrainedNinja: public Ninja
     {
     public:
         // **** define constructors ****

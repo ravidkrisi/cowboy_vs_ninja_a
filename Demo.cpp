@@ -18,15 +18,24 @@ using namespace ariel;
 
 
 int main() {
-    Point a(32.3,44),b(1.3,3.5);
+         Point i(1.5, 3.5);
+        Point j(-1.5, -8.5);
+        cout << (i.getDistance(j) == 12.3693) <<endl;
+    Point a(1,10),b(1,20);
     assert(a.getDistance(b) == b.getDistance(a));
-//    Cowboy *tom = new Cowboy("Tom", a);
-//    OldNinja *sushi = new OldNinja("sushi", b);
-//    tom->shoot(sushi);
-//    cout << tom->print() <<endl;
+    cout << a.getDistance(b) << endl;
+   Cowboy *tom = new Cowboy("Tom", a);
+   OldNinja *sushi = new OldNinja("sushi", b);
+   tom->shoot(sushi);
+   cout << tom->print() <<endl;
+   cout << sushi->print() <<endl;
 //
-//    sushi->move(tom);
-//    sushi->slash(tom);
+   sushi->move(tom);
+   cout << tom->print() <<endl;
+   cout << sushi->print() <<endl;
+   sushi->slash(tom);
+   cout << tom->print() <<endl;
+   cout << sushi->print() <<endl;
 //
 //    Team team_A(tom);
 //    team_A.add(new YountNinja("Yogi", Point(64,57)));

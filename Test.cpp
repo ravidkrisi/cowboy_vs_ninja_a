@@ -1,8 +1,16 @@
 #include "doctest.h"
 #include "sources/Point.hpp"
+#include <cmath>
+#include <limits>
 
 using namespace std;
 using namespace ariel;
+
+// from chatgpt to compare 2 double numbers due the precission 
+bool isEqual(double a, double b) {
+    return std::abs(a - b) < std::numeric_limits<double>::epsilon();
+}
+
 TEST_SUITE("Point class tests")
 {
     TEST_CASE("Parameterized constructor")
@@ -23,8 +31,8 @@ TEST_SUITE("Point class tests")
         CHECK_EQ(b.getX(), 1.5);
         CHECK_EQ(b.getY(), 2.5);
 
-        CHECK_EQ(a.getX(), -1.5);
-        CHECK_EQ(a.getY(), 3);
+        CHECK_EQ(c.getX(), -1.5);
+        CHECK_EQ(c.getY(), 3);
     }
 
     TEST_CASE("default constructor")
@@ -71,14 +79,14 @@ TEST_SUITE("Point class tests")
         Point j(-1.5, -8.5);
 
         CHECK_NOTHROW(i.getDistance(j));
-        CHECK_EQ(i.getDistance(j), 11.1803);
+        CHECK(isEqual(i.getDistance(j), 12.3693));
     }
     // need to check how to compare output
-    TEST_CASE("printPoint function")
-    {
-        Point a(1.5, 2.0);
-        CHECK_NOTHROW(a.printPoint());
-    }
+    // TEST_CASE("printPoint function")
+    // {
+    //     Point a(1.5, 2.0);
+    //     CHECK_NOTHROW(a.printPoint());
+    // }
 
     TEST_CASE("moveTowards function")
     {
@@ -91,6 +99,6 @@ TEST_SUITE("Point class tests")
         CHECK_EQ(Point::moveTowards(a, b, 5).getY(),8);
 
         CHECK_EQ(Point::moveTowards(a, b, 0).getX(), 1);
-        CHECK_EQ(Point::moveTowards(a, b, 0).getX(), 3);
+        CHECK_EQ(Point::moveTowards(a, b, 0).getY(), 3);
     }
 }

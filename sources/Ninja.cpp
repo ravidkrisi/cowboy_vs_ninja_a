@@ -27,10 +27,11 @@ namespace ariel
         }
         //else nothing happen
     }
-}
-
-using namespace ariel;
-int main ()
-{
-//    Ninja a("ravid", 120, 12, Point(14, 20));
+    // this function overrides the print function from character and add info about the type of the Ninja
+    string Ninja::print() const
+    {
+        string info = "N: ";
+        info += Character::print();
+        return info;
+    }
 }

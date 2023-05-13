@@ -9,7 +9,7 @@ namespace ariel
     // reload the cartridge with extra 6 bullets
     void Cowboy::reload() {this->cartridge_+=6;}
     // return true if cowboy's cartridge is not empty, else false
-    bool Cowboy::hasBullets()
+    bool Cowboy::hasBullets() const
     {
        bool has_bullets =  (this->cartridge_>0) ?  true:  false;
        return has_bullets;
@@ -28,9 +28,12 @@ namespace ariel
             }
         }
     }
-}
-using namespace ariel;
-int main()
-{
-    Cowboy *tom = new Cowboy("Tom", Point(3, 2));
+    // overrides the print function from character do the same hust add info that the character is cowboy
+    string Cowboy::print() const
+    {
+        
+        string info = "C: ";
+        info += Character::print();
+        return info;
+    }
 }

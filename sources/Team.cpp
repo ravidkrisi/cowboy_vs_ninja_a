@@ -1,6 +1,7 @@
 #include "Team.hpp"
 #include <limits.h>
 #include <float.h>
+#include <stdexcept>
 using namespace std;
 namespace ariel
 {
@@ -69,20 +70,20 @@ namespace ariel
             Character* closest_member = NULL;
             double closet_distance = DBL_MAX;
 
-            for(int i=0; i < this->team_members_.size(); i++)
+            // iterate over all team members
+            for (auto ptr : this->team_members_)
             {
-                // check if the team member is alive
-                if(this->team_members_[i]->isAlive())
+                // check if the team meber is alive 
+                if(ptr->isAlive())
                 {
-                    double temp_dist = this->team_members_[i]->distance(this->leader_);
-                    if(temp_dist < closet_distance)
+                    double temp_dist = ptr->distance(this->leader_); // calc the distance from the leader 
+                    if (temp_dist < closet_distance)
                     {
-                        closest_member = this->team_members_[i];
+                        closest_member = ptr; 
                         closet_distance = temp_dist;
                     }
                 }
             }
-
             // set the closest team member to team leader
             this->leader_ = closest_member;
         }
@@ -94,17 +95,17 @@ namespace ariel
         Character* closest_victim = NULL;
         double closest_dist = DBL_MAX;
 
-        // iterate over all opponent team members
-        for(int i=0; i < opponent_team->team_members_.size(); i++)
+        // iterate over all  opponent team members team members
+        for (auto ptr : opponent_team->team_members_)
         {
-            // check if the team member is alive
-            if(opponent_team->team_members_[i]->isAlive())
+            // check if the team member is alive 
+            if (ptr->isAlive())
             {
-                double temp_dist = this->leader_->distance(opponent_team->team_members_[i]);
-                if(temp_dist < closest_dist)
+                double temp_dist = ptr->distance(this->leader_); // calc the dist from the leader of the attacking team 
+                if (temp_dist < closest_dist)
                 {
-                    closest_victim = opponent_team->team_members_[i];
-                    closest_dist = temp_dist;
+                    closest_victim = ptr;
+                    closest_dist = temp_dist; 
                 }
             }
         }
@@ -115,20 +116,20 @@ namespace ariel
     void Team::attackVictim(Character *victim)
     {
         // case 1: iterate over the attacking team cowboy members
-        for(int i=0; i < this->team_members_.size(); i++)
+        for(auto ptr : this->team_members_)
         {
             // check if the team member is alive
-            if (this->team_members_[i]->isAlive())
+            if (ptr->isAlive())
             {
                 // case 1: cowboy, try to cast to cowboy
-                Cowboy* cowboy = dynamic_cast<Cowboy *>(this->team_members_[i]);
+                Cowboy* cowboy = dynamic_cast<Cowboy *>(ptr);
                 // if casting succeed shoot the victim if cowboy has cartridge else reload armor
                 if (cowboy)
                 {
                     // check if cowboy has bullets
                     if (cowboy->hasBullets())
                     {
-                        cowboy->shoot();
+                        cowboy->shoot(victim);
                     }
                     // else reload armor
                     else
@@ -139,20 +140,20 @@ namespace ariel
             }
         }
         // case 2: iterate over the attacking team ninja members
-        for (int i=0; i < this->team_members_.size(); i++)
+        for (auto ptr : this->team_members_)
         {
             // check if the team member is alive
-            if (this->team_members_[i]->isAlive())
+            if (ptr->isAlive())
             {
                 // try to cast to ninja
-                Ninja* ninja = dynamic_cast<Ninja *>(this->team_members_[i]);
+                Ninja* ninja = dynamic_cast<Ninja *>(ptr);
                 // if casting succeed slash the victim if he is less than 1 meter far else move towards him
                 if (ninja)
                 {
                     // check if ninja is less than 1 meter far then slash the victim
                     if(ninja->distance(victim) < 1)
                     {
-                        ninja->slash();
+                        ninja->slash(victim);
                     }
                     // else move towards the victim
                     else
