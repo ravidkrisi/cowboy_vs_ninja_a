@@ -7,7 +7,10 @@ namespace ariel
 {
     // **** define constructors deconstruct ****
     Team::Team(): leader_(nullptr){} // default constructor
-    Team::Team(Character* leader): leader_(leader) {} // parameterized constructor
+    Team::Team(Character* leader): leader_(leader)
+    {
+        this->team_members_.push_back(leader);
+    } // parameterized constructor
     // destructor
     Team::~Team()
     {

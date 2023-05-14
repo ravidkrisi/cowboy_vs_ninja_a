@@ -418,6 +418,18 @@ TEST_SUITE("Team class")
         CHECK_NOTHROW(Team d(oldNinja)); // parameterized constructor with old ninja
     }
 
+    TEST_CASE("add function")
+    {
+
+        Cowboy* c1 = new Cowboy();
+        Cowboy* c2 = new Cowboy();
+        Team add_team(c1);
+
+        // check if exception thrown when add a member that already in the team
+        CHECK_THROWS(add_team.add(c1));
+        // check if exception no thrown when add different member
+        CHECK_NOTHROW(add_team.add(c2));
+    }
 }
 
 
