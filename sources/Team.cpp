@@ -6,23 +6,47 @@ using namespace std;
 namespace ariel
 {
     // **** define constructors deconstruct ****
-    Team::Team(): leader_(NULL)  {} // default constructor
+    Team::Team(): leader_(nullptr){} // default constructor
     Team::Team(Character* leader): leader_(leader) {} // parameterized constructor
+    // destructor
+    Team::~Team()
+    {
+        // free all team members ptr
+        for (auto ptr : this->team_members_)
+        {
+            delete ptr;
+            ptr = nullptr;
+        }
+        // free leader ptr
+        delete this->leader_;
+        this->leader_ = nullptr;
+    }
+
+    // **** define getters ****
+    Character* Team::getLeader() const{return this->leader_;}
 
     // **** define functions ****
 
     // this function get a pointer to team member and add it to team vector team members
     void Team::add(Character *team_member)
     {
-        // check if the team has less than 10 members
-        if(team_members_.size()<10)
+        // check if the member is already in the team them throws invalid argument error
+        for (auto ptr : this->team_members_)
         {
-            this->team_members_.push_back(team_member);
+            if (ptr == team_member)
+            {
+                throw std::invalid_argument("cant add this member already in the team");
+            }
         }
-        // the team is full and throws an error
-        else
+        // check if the team has less than 10 members than thrown out of range exception
+        if(team_members_.size()>=10)
         {
             throw std::out_of_range("cant add members the team is full");
+        }
+        // add character to team member
+        else
+        {
+            this->team_members_.push_back(team_member);
         }
     }
 
@@ -55,10 +79,7 @@ namespace ariel
     {
         setLeader(); // if the team leader is dead set the closest team member to the leader as the new leader
         Character* victim = getVictim(opponent_team); // get the victim of the opponent team
-
-
-
-
+        attackVictim(victim,opponent_team); // all team members attack the victim
     }
     // if the team leader is dead set the closest team member to the leader as the new leader
     void Team::setLeader()
@@ -113,7 +134,8 @@ namespace ariel
         return closest_victim;
     }
 
-    void Team::attackVictim(Character *victim)
+    // in this class first the cowboys of the attacking team attack and then the ninja of the team
+    void Team::attackVictim(Character *victim, Team* opponent_team)
     {
         // case 1: iterate over the attacking team cowboy members
         for(auto ptr : this->team_members_)
@@ -130,6 +152,11 @@ namespace ariel
                     if (cowboy->hasBullets())
                     {
                         cowboy->shoot(victim);
+                        // check if the victim is dead then switch to another victim
+                        if (!victim->isAlive())
+                        {
+                            victim = getVictim(opponent_team); // set new victim
+                        }
                     }
                     // else reload armor
                     else
@@ -154,6 +181,11 @@ namespace ariel
                     if(ninja->distance(victim) < 1)
                     {
                         ninja->slash(victim);
+                        // check if the victim is dead then switch to another victim
+                        if (!victim->isAlive())
+                        {
+                            victim = getVictim(opponent_team); // set new victim
+                        }
                     }
                     // else move towards the victim
                     else
@@ -161,9 +193,7 @@ namespace ariel
                         ninja->move(victim);
                     }
                 }
-
             }
         }
     }
-
 }

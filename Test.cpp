@@ -391,7 +391,7 @@ TEST_SUITE("MIX BATTLE")
         OldNinja *oldNinja = new OldNinja("oldNinja", Point(9, 9));
 
         CHECK_NOTHROW(youngNinja->slash(cowboy));
-        // check if nothing happend because they not less than 1 meter far
+        // check if nothing happened because they not less than 1 meter far
         CHECK_EQ(cowboy->getHpLevel(), 110);
 
         trainedNinja->move(cowboy);
@@ -400,6 +400,22 @@ TEST_SUITE("MIX BATTLE")
         CHECK_NOTHROW(trainedNinja->slash(cowboy));
         // check if trained ninja succeed slash cowboy
         CHECK_EQ(cowboy->getHpLevel(), 70);
+    }
+}
+
+TEST_SUITE("Team class")
+{
+    TEST_CASE("constructor")
+    {
+        CHECK_NOTHROW(Team ()); // default constructor
+        Cowboy *cowboy = new Cowboy("cowboy", Point(10, 10));
+        YoungNinja *youngNinja = new YoungNinja("youngNinja", Point(5, 5));
+        TrainedNinja *trainedNinja = new TrainedNinja("TrainedNinja", Point(7, 7));
+        OldNinja *oldNinja = new OldNinja("oldNinja", Point(9, 9));
+        CHECK_NOTHROW(Team a(cowboy)); // parameterized constructor with cowboy
+        CHECK_NOTHROW(Team b(youngNinja)); // parameterized constructor with young ninja
+        CHECK_NOTHROW(Team c(trainedNinja)); // parameterized constructor with trained ninja
+        CHECK_NOTHROW(Team d(oldNinja)); // parameterized constructor with old ninja
     }
 
 }
