@@ -24,7 +24,7 @@ namespace ariel
         // **** declare constructors and destructor ****
         Team (); // default constructor
         Team(Character* leader); // parameterized constructor
-        ~Team(); // destructor
+        virtual ~Team(); // destructor
         Team& operator=(const Team&) = delete; // disable copy operator
 
         // **** declare getters ****
@@ -41,6 +41,20 @@ namespace ariel
         Character* getVictim(Team* opponent_team); // return the closest team member of the opponent team to the leader of the attack team
         virtual void attackVictim(Character* victim, Team* opponent_team); // get pointer to the victim of the opponent team and attack him/her till is down. then go to the next victim if the attacking team members are still alive.
 
+    };
+
+
+    // **** Team 2 ****
+    class Team2: public Team
+    {
+    public:
+        // **** declare constructors and destructor ****
+        Team2(); // default constructor 
+        Team2(Character *); // parameterized constructor 
+        // ~Team2(); // destructor 
+
+
+        void attackVictim(Character* victim, Team* opponent_team) override; // this method attack the victim by by order added the attacking team members not by type and order added
     };
 }
 

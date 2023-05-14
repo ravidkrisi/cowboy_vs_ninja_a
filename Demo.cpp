@@ -16,37 +16,9 @@ using namespace std;
 
 using namespace ariel;
 
-bool isEqual(double a, double b, double tolerance = 1e-4) {
-    return fabs(a - b) < tolerance;
-}
-
 
 int main() {
-         Point i(1.5, 3.5);
-        Point j(-1.5, -8.5);
-        cout << (i.getDistance(j) == 12.3693) <<endl;
-    Point a(1,10),b(1,20);
-    assert(a.getDistance(b) == b.getDistance(a));
-    cout << a.getDistance(b) << endl;
-   Cowboy *tom = new Cowboy("Tom", a);
-   OldNinja *sushi = new OldNinja("sushi", b);
-   tom->shoot(sushi);
-   cout << tom->print() <<endl;
-   cout << sushi->print() <<endl;
-//
-   sushi->move(tom);
-   cout << tom->print() <<endl;
-   cout << sushi->print() <<endl;
-   sushi->slash(tom);
-   cout << tom->print() <<endl;
-   cout << sushi->print() <<endl;
 
-
-   cout << 1.0/3.0 << endl;
-   cout << (1.0/3 == 0.333333) << endl;
-   cout << isEqual(1.0/3, 0.333333) << endl;
-    cout << (i.getDistance(j) == 12.3693) <<endl;
-cout << isEqual(i.getDistance(j), 12.3693) <<endl;
 //
 //    Team team_A(tom);
 //    team_A.add(new YountNinja("Yogi", Point(64,57)));

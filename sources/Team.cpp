@@ -2,6 +2,7 @@
 #include <limits.h>
 #include <float.h>
 #include <stdexcept>
+#include <iostream>
 using namespace std;
 namespace ariel
 {
@@ -53,7 +54,7 @@ namespace ariel
     // return the number of alive team members
     int Team::stillAlive()
     {
-        int alive_count;
+        int alive_count = 0;
         //iterate over all team members
         for (auto ptr : this->team_members_)
         {
@@ -192,6 +193,71 @@ namespace ariel
                     {
                         ninja->move(victim);
                     }
+                }
+            }
+        }
+    }
+
+    // **** Team 2 ****
+
+
+    // **** define constructors deconstruct ****
+    Team2::Team2(): Team() {} // defualt constructor 
+    Team2::Team2(Character * leader): Team(leader) {} // parameterized constructor 
+    // Team2::~Team2(): {Team::~Team}
+
+    // **** define functions ****
+    void Team2::attackVictim(ariel::Character *victim, ariel::Team *opponent_team)
+    {
+        // iterate over all attacking team members
+        for (auto ptr : this->team_members_)
+        {
+            // if all opponent team members are dead
+            if (victim == NULL)
+            {
+                return;
+            }
+            // case 1: cowboy, try to cast to cowboy
+            Cowboy* cowboy = dynamic_cast<Cowboy *>(ptr);
+            // if casting succeed shoot the victim if cowboy has cartridge else reload armor
+            if (cowboy)
+            {
+                // check if cowboy has bullets
+                if (cowboy->hasBullets())
+                {
+                    cowboy->shoot(victim);
+                    // check if the victim is dead then switch to another victim
+                    if (!victim->isAlive())
+                    {
+                        victim = getVictim(opponent_team); // set new victim
+                    }
+                }
+                    // else reload armor
+                else
+                {
+                    cowboy->reload();
+                }
+            }
+
+            // case 2: ninja try to cast to ninja
+            Ninja* ninja = dynamic_cast<Ninja *>(ptr);
+            // if casting succeed slash the victim if he is less than 1 meter far else move towards him
+            if (ninja)
+            {
+                // check if ninja is less than 1 meter far then slash the victim
+                if(ninja->distance(victim) < 1)
+                {
+                    ninja->slash(victim);
+                    // check if the victim is dead then switch to another victim
+                    if (!victim->isAlive())
+                    {
+                        victim = getVictim(opponent_team); // set new victim
+                    }
+                }
+                    // else move towards the victim
+                else
+                {
+                    ninja->move(victim);
                 }
             }
         }

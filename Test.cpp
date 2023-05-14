@@ -175,8 +175,8 @@ TEST_SUITE("Old Ninja class test")
         OldNinja* b = new OldNinja("ravid", Point(2.5, 3));
 
         // check if hp level initialized to 100
-        CHECK_EQ(a->getHpLevel(), 140);
-        CHECK_EQ(b->getHpLevel(), 140);
+        CHECK_EQ(a->getHpLevel(), 150);
+        CHECK_EQ(b->getHpLevel(), 150);
 
         // check name initialization
         CHECK_EQ(a->getName(), "anonOldNinja");
@@ -212,21 +212,21 @@ TEST_SUITE("Old Ninja class test")
 
         CHECK_THROWS(a->slash(a)); // check if exception thrown when ninja want to slash itself
         CHECK_NOTHROW(a->slash(b));
-        CHECK_EQ(b->getHpLevel(), 140); // same hp level as initialized
+        CHECK_EQ(b->getHpLevel(), 150); // same hp level as initialized
 
         //check if nothing happen when foe is exactly 1 meter far
         OldNinja* c = new OldNinja("ravid", Point());
         OldNinja* d = new OldNinja("talia", Point(0, 1));
 
         CHECK_NOTHROW(c->slash(d));
-        CHECK_EQ(d->getHpLevel(), 140); // same hp level as initialized
+        CHECK_EQ(d->getHpLevel(), 150); // same hp level as initialized
 
         // check if slash is happening when foe is less than 1 meter far
         OldNinja* e = new OldNinja("ravid", Point());
         OldNinja* f = new OldNinja("talia", Point(0, 0.9));
 
         CHECK_NOTHROW(e->slash(f));
-        CHECK_EQ(f->getHpLevel(), 100); // same hp level as initialized
+        CHECK_EQ(f->getHpLevel(), 110); // same hp level as initialized
     }
 }
 TEST_SUITE("Trained Ninja class test")
@@ -379,7 +379,7 @@ TEST_SUITE("MIX BATTLE")
 
         // check hp level of all ninjas
         CHECK_EQ(youngNinja->getHpLevel(), 90);
-        CHECK_EQ(oldNinja->getHpLevel(), 130);
+        CHECK_EQ(oldNinja->getHpLevel(), 140);
         CHECK_EQ(trainedNinja->getHpLevel(), 110);
     }
 
@@ -431,6 +431,97 @@ TEST_SUITE("Team class")
         CHECK_THROWS(add_team.add(cowboy));
         // check if exception no thrown when add different member
         CHECK_NOTHROW(add_team.add(youngNinja));
+    }
+
+    TEST_CASE("still alive function")
+    {
+        Cowboy *cowboy = new Cowboy("cowboy", Point(10, 10));
+        YoungNinja *youngNinja = new YoungNinja("youngNinja", Point(5, 5));
+        Team a(cowboy);
+        a.add(youngNinja);
+        CHECK_EQ(a.stillAlive(), 2);
+
+        TrainedNinja *trainedNinja = new TrainedNinja("TrainedNinja", Point(5, 5));
+
+        while(youngNinja->isAlive())
+        {
+            trainedNinja->slash(youngNinja);
+        }
+
+        CHECK_EQ(a.stillAlive(), 1); // one warrior is down
+    }
+
+    TEST_CASE("attack function test")
+    {
+        Cowboy *cowboy = new Cowboy("cowboy", Point(10, 10));
+        YoungNinja *youngNinja = new YoungNinja("youngNinja", Point(5, 5));
+        TrainedNinja *trainedNinja = new TrainedNinja("TrainedNinja", Point(7, 7));
+        OldNinja *oldNinja = new OldNinja("oldNinja", Point(9, 9));
+        
+        Team a(cowboy);
+        a.add(youngNinja);
+
+        Team b(trainedNinja);
+        b.add(oldNinja);
+
+        // team A attack team B 
+        // cowboy shoot old ninja 
+        //  youngninja move towards old ninja
+
+        CHECK_NOTHROW(a.attack(&b));
+
+        // old ninja: 130 hp level
+        CHECK_EQ(oldNinja->getHpLevel(), 140);
+        // young ninja move to old ninja coordinate 
+        CHECK_EQ(youngNinja->getLocation().getX(), 9);
+        CHECK_EQ(youngNinja->getLocation().getY(), 9);
+
+        // team B attack team A 
+        // young ninja is the victim 
+        // trained ninja move to young ninja to his coordinate 
+        // old ninja slash young ninja 
+        // young ninja hp level 60
+        CHECK_NOTHROW(b.attack(&a));
+        CHECK_EQ(trainedNinja->getLocation().getX(), 9);
+        CHECK_EQ(trainedNinja->getLocation().getY(), 9);
+        CHECK_EQ(youngNinja->getHpLevel(), 60);
+
+        // a attack b till all b members are dead
+        while (b.stillAlive()>0)
+        {
+            a.attack(&b);
+        }
+
+        CHECK_EQ(b.stillAlive(), 0);
+    }
+}
+TEST_SUITE("Team2 class")
+{
+    TEST_CASE("attack function and also all opponent team members dead in the middle of the attack")
+    {
+        TrainedNinja *trainedNinja1 = new TrainedNinja("TrainedNinja1", Point(1, 2));
+        TrainedNinja *trainedNinja2 = new TrainedNinja("TrainedNinja2", Point(1, 2));
+        TrainedNinja *trainedNinja3 = new TrainedNinja("TrainedNinja3", Point(1, 2));
+        TrainedNinja *trainedNinja4 = new TrainedNinja("TrainedNinja4", Point(7, 7));
+
+        Cowboy *cowboy1 = new Cowboy ("cowboy1", Point(1, 2));
+
+        Team2 a(trainedNinja1);
+        a.add(trainedNinja2);
+        a.add(trainedNinja3);
+        a.add(trainedNinja4);
+        a.add(cowboy1);
+
+        Cowboy *cowboy2 = new Cowboy ("cowboy1", Point(1, 2));
+        Team2 b(cowboy2);
+
+        // team A attack Team b
+        // all ninja attack before cowboy because they have been added before and cowboy cartridge is still 6 
+    
+        CHECK_NOTHROW(a.attack(&b));
+
+        CHECK_FALSE(cowboy2->isAlive());
+        CHECK_EQ(cowboy1->getCartridge(), 6);
     }
 }
 
