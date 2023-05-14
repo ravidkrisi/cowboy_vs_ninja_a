@@ -1,6 +1,6 @@
 #!make -f
 
-#CXX=clang++-14
+# CXX=clang++-14
  CXX=g++
 TIDY=clang-tidy-14
 CXXVERSION=c++2a

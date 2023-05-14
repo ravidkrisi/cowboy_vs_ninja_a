@@ -20,9 +20,6 @@ namespace ariel
             delete ptr;
             ptr = nullptr;
         }
-        // free leader ptr
-        delete this->leader_;
-        this->leader_ = nullptr;
     }
 
     // **** define getters ****

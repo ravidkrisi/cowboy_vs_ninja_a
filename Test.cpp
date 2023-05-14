@@ -421,14 +421,16 @@ TEST_SUITE("Team class")
     TEST_CASE("add function")
     {
 
-        Cowboy* c1 = new Cowboy();
-        Cowboy* c2 = new Cowboy();
-        Team add_team(c1);
+        Cowboy *cowboy = new Cowboy("cowboy", Point(10, 10));
+        YoungNinja *youngNinja = new YoungNinja("youngNinja", Point(5, 5));
+        TrainedNinja *trainedNinja = new TrainedNinja("TrainedNinja", Point(7, 7));
+        OldNinja *oldNinja = new OldNinja("oldNinja", Point(9, 9));
+        Team add_team(cowboy);
 
         // check if exception thrown when add a member that already in the team
-        CHECK_THROWS(add_team.add(c1));
+        CHECK_THROWS(add_team.add(cowboy));
         // check if exception no thrown when add different member
-        CHECK_NOTHROW(add_team.add(c2));
+        CHECK_NOTHROW(add_team.add(youngNinja));
     }
 }
 
